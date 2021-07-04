@@ -51,7 +51,7 @@ export default class WsClient extends Adapter.WsClient<'discord'> {
           bot._d = parsed.s
         }
         // https://discord.com/developers/docs/topics/gateway#identifying
-        if (parsed.op === Opcode.Hello) {
+        if (parsed.op === Opcode.Hello && !bot._sessionId) {
           bot._ping = setInterval(() => this.heartbeat(bot), parsed.d.heartbeat_interval)
           bot.socket.send(JSON.stringify({
             op: Opcode.Identify,
